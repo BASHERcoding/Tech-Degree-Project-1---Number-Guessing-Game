@@ -1,39 +1,35 @@
 import random
 
 def start_game(function_high_score):
-    guess_count = 1
+    guess_count = 0
 
     print("Welcome to the Number Guessing Game!")
     if function_high_score != 100000:
         print(f"Current high score is {function_high_score}")
     answer = random.randint(1, 10)
-    try:
-        player_choice = int(input("Pick a number between 1 - 10:  "))
-        while player_choice != answer:
-            if player_choice > 10:
+    player_choice = 'incorrect'
+    while player_choice != answer:
+        player_choice = input("Pick a number between 1 - 10:  ")
+        guess_count += 1
+        if not player_choice.isnumeric():
+            print("You need to enter an integer that's between 1-10.")
+        else:
+            player_choice = int(player_choice)
+            if int(player_choice) > 10:
                 print("Please try again and enter a number inside the range.")
-                guess_count += 1
-                player_choice = int(input("Pick a number between 1 - 10:  "))
-            elif player_choice <= 0:
+            elif int(player_choice) <= 0:
                 print("Please try again and enter a number inside the range.")
-                guess_count += 1
-                player_choice = int(input("Pick a number between 1 - 10:  "))
-            elif player_choice > answer:  
+            elif int(player_choice) > answer:  
                 print("It's lower, guess again.")
-                guess_count += 1
-                player_choice = int(input("Pick a number between 1 - 10:  "))
-            elif player_choice < answer:
+            elif int(player_choice) < answer:
                 print("It's higher, guess again.")
-                guess_count += 1
-                player_choice = int(input("Pick a number between 1 - 10:  "))
-        if player_choice == answer:
-            print(f"You got it right! It took you {guess_count} guesses. This round is over, thanks for playing.")
-            if guess_count < function_high_score:
-                function_high_score = guess_count
+
+    if int(player_choice) == answer:
+        print(f"You got it right! It took you {guess_count} guesses. This round is over, thanks for playing.")
+        if guess_count < function_high_score:
+            function_high_score = guess_count
         return function_high_score
-    except ValueError:
-        print("You need to enter a number that's 1 - 10.  It must be a whole number typed numerically.\n")
-        return function_high_score
+
         
 
 play_again = 'y'
